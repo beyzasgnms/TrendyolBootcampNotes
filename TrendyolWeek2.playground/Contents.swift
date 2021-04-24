@@ -263,4 +263,174 @@ do{
     screen = "0"
 }
 
-//oyun için dönme açıları ile ilgili enum yazınız..
+//Part2
+
+//Extensions
+
+var a = 3.3
+var b = 685.0
+var c = a / b
+//sonuç yazıldı fakat çok büyük bir sayı, böyle bir bölüm gelse bile virgülden sonra 2 ya da 3 ne
+//istiyorsam bunu handle etmek istiyorum ve buna extension yazmalıyım.
+
+//virgülden sonra 2 basamak 10 üzeri2...
+var d = (c*1000).rounded() //sayıyı yuvarlar
+d / 1000
+
+extension Double{
+    func sayiyiYuvarla(basamak: Int) -> Double{
+        let carpan = pow(10.0, Double(basamak))
+        return(self * carpan).rounded() / carpan
+    }
+}
+
+var e  = 0.00291970802919708
+e.sayiyiYuvarla(basamak: 3)
+
+extension Int{
+    func kupAl() -> Int{
+        return self*self*self
+    }
+    mutating func kareAl() {
+        self = self * self
+    }
+    func cift()->String{
+        if self % 2 == 0{
+            return "sayi cift"
+        }else{
+            return "sayi tek"
+    }
+}
+}
+5.kupAl()
+var k = 3
+k.kareAl()
+57.cift()
+
+let cities = ["İstanbul", "Ankara", "izmir"]
+let numbrs = [1,2,3]
+let doubleNumbers = [3.14,5.2,7.3]
+
+func myCities(cities:[String]){
+    for city in cities{
+        print(city)
+    }
+}
+func tamSayilar(ts:[Int]){
+    for t in ts{
+        print(t)
+    }
+}
+    
+func doubleSayilar(ts:[Double]){
+    for d in ts{
+        print(d)
+        }
+}
+myCities(cities: cities)
+tamSayilar(ts: numbrs)
+doubleSayilar(ts: doubleNumbers)
+
+func herhangiBirArray<T>(array:[T]){
+    array.map{
+        print($0)
+    }
+}
+herhangiBirArray(array: cities)
+func addition<T: Numeric>(a:T,b:T)->T{
+    return a+b
+}
+addition(a:3,b:5)
+
+
+func multiply<T: Numeric>(a:T,b:T)->T{
+    return a*b
+}
+multiply(a: 2, b: 5)
+
+func findIndex<T:Equatable>(foundItem:T,in items: [T])->Int?{
+    for (index,item) in items.enumerated(){
+        if item == foundItem{
+            return index
+        }
+    }
+    return nil
+}
+if let result = findIndex(foundItem: "Eskişehir", in: cities){
+    print(result)
+}
+
+class Arac{
+    var tekerlekSayisi: Int
+    var renk: String
+    init(tekerlekSayisi:Int,renk:String){
+        self.tekerlekSayisi = tekerlekSayisi
+        self.renk = renk
+    }
+}
+
+let bmw = Arac(tekerlekSayisi: 4,renk: "beyaz")
+let bmw2 = bmw
+bmw.renk = "siyah"
+bmw.renk
+bmw2.renk
+bmw.renk
+
+struct Araba{
+    var model: Int
+    var yakitTipi:String
+}
+var araba = Araba(model:2020,yakitTipi: "hibrid")
+araba.model
+let araba2 = araba
+araba.yakitTipi = "Dizel"
+araba.yakitTipi
+araba2.yakitTipi//hala hibrid olarak yazmaya devam eder.
+
+
+//Reference Type and Value Type... klasik nesne tabanlı programlama
+//Value Type stack, reference type heap'te tutulur. Struct kullanımı tavsiye edilir.
+
+struct Kare{
+    var kenarUzunlugu: Int
+    func cevreHesapla()->Int{
+        return kenarUzunlugu*4
+    }
+    func alanHesapla()->Int{
+        return kenarUzunlugu*kenarUzunlugu
+    }
+}
+let kare = Kare(kenarUzunlugu: 3)
+kare.alanHesapla()
+kare.cevreHesapla()
+//Daire için struct yaz
+
+struct Daire{
+    var yaricap:Double
+    func alan()-> Double{
+        return Double(2*3*yaricap)
+    }
+    func cevre()-> Double{
+        return Double(2*3*yaricap)
+    }
+}
+
+
+//Protocols
+class Game{
+    var name:String
+    var platform:String
+    var ganre: String
+    init(name:String, platform:String, ganre:String){
+        self.name = name
+        self.platform = platform
+        self.ganre = ganre
+    }
+}
+
+protocol Oyuncu{
+    var name:String{get}
+    var alive:Bool{get set}
+    var health:Int{get set}
+}
+
